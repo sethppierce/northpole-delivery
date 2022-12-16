@@ -20,6 +20,7 @@ northpole.on('connection', (socket) => {
   });
 
   socket.on('PLEASESANTA', (payload) => {
+    console.log(`New wishlist from ${payload.name}`)
     // create queue or add into queue
     let currentQueue = presentQueue.read(payload.queueId);
     // if queue isn't made, create it
@@ -33,7 +34,7 @@ northpole.on('connection', (socket) => {
   });
 
   socket.on('CHECKITTWICE', (payload) => {
-    console.log('Christmas list made it to Santa!');
+    console.log('Christmas wish made it to Santa!');
     let currentQueue = presentQueue.read(payload.queueId);
     if(!currentQueue){
       throw new Error('No Queue');
@@ -57,7 +58,7 @@ northpole.on('connection', (socket) => {
   });
 
   socket.on('RECIEVED', (payload) => {
-    console.log('Gift Recieved', payload);
+    console.log(`${payload.name} recieved their gift`);
     let currentQueue = presentQueue.read(payload.queueId);
     if(!currentQueue){
       throw new Error('No Queue');
