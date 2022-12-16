@@ -7,8 +7,20 @@ const {grantWish, onSleigh, recieveThanks} = require('./handlers');
 socket.emit('JOIN', 'santa')
 socket.emit('GET_WISHES', {queueId: 'wishlist'})
 
-socket.on('NEWWISH', (payload) => grantWish(socket)(payload));
+socket.on('NEWWISH', grantWishTimeOut);
 
-socket.on('CHRISTMASEVE', (payload) => onSleigh(socket)(payload));
+socket.on('CHRISTMASEVE', onSleighTimeOut);
 
 socket.on('THANKSSANTA', (payload) => recieveThanks(socket)(payload));
+
+function grantWishTimeOut(payload){
+  setTimeout(() => {
+    grantWish(socket)(payload)
+  }, 3000)
+};
+
+function onSleighTimeOut(payload){
+  setTimeout(() => {
+    onSleigh(socket)(payload)
+  }, 3000)
+};
